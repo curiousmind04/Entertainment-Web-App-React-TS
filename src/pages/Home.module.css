@@ -1,0 +1,52 @@
+.search {
+  position: relative;
+  padding-left: 2.5rem;
+  margin-bottom: 1.5rem;
+  margin-inline: 1rem;
+}
+
+.search > input {
+  background: transparent;
+  color: var(--pure-white);
+  height: 1.5rem;
+  width: 16.0625rem;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  caret-color: var(--red-color);
+}
+
+.search > input::placeholder {
+  font-size: 1rem;
+  opacity: 0.5;
+}
+
+.search > img {
+  width: 1.5rem;
+  aspect-ratio: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.search > input:focus ~ .underline {
+  height: 0.5rem;
+  border-bottom: 1px solid var(--greyish-blue);
+}
+
+.trending {
+  padding-inline: 1rem;
+}
+
+.trending > h1 {
+  color: var(--pure-white);
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+
+.slider {
+  height: 8.75rem;
+  border: 1px solid #fff;
+  overflow: auto;
+  scrollbar-width: none;
+}

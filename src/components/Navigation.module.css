@@ -1,0 +1,49 @@
+.header {
+  background: var(--semi-dark-blue);
+  height: 3.5rem;
+  padding-inline: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header > :first-child {
+  width: 1.5625rem;
+}
+
+.group {
+  height: 1rem;
+  display: flex;
+  gap: 1.5rem;
+}
+
+/* .group > .link {
+  cursor: pointer;
+} */
+
+.avatar {
+  height: 1.5rem;
+  aspect-ratio: 1;
+  border: 1px solid hsl(0, 0%, 100%);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.avatar > img {
+  width: 100%;
+}
+
+/* used codepen to get filter values to change image svg color */
+
+.group > .active {
+  filter: brightness(0) saturate(100%) invert(99%) sepia(36%) saturate(2%)
+    hue-rotate(86deg) brightness(114%) contrast(100%);
+}
+
+@media (hover: hover) {
+  .group > .link:hover {
+    filter: brightness(0) saturate(100%) invert(43%) sepia(90%) saturate(1898%)
+      hue-rotate(332deg) brightness(98%) contrast(102%);
+  }
+}

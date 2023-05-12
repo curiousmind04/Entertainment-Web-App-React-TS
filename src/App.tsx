@@ -29,6 +29,10 @@ function App() {
 
   // console.log(data);
 
+  // const addBookmark = ()=> {
+
+  // }
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -37,11 +41,11 @@ function App() {
         { index: true, element: <HomePage data={data} /> },
         {
           path: "/movies",
-          element: <MoviesPage />,
+          element: <MoviesPage data={data} />,
         },
         {
           path: "/tv",
-          element: <TVPage />,
+          element: <TVPage data={data} />,
         },
         {
           path: "/bookmarks",

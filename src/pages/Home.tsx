@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { MediaItem } from "myTypes";
 
-import classes from "./Home.module.css";
+import classes from "./Styles.module.css";
 
 type Props = {
   data: MediaItem[] | undefined;
@@ -56,9 +56,14 @@ const HomePage: React.FC<Props> = ({ data }) => {
         />
         <div className={classes.underline}></div>
       </div>
+
       <section
         className={classes.searchResults}
-        hidden={searchResults.length === 0 ? true : false}
+        hidden={
+          inputRef.current === null || inputRef.current?.value === ""
+            ? true
+            : false
+        }
       >
         <h1>{`Found ${searchResults.length} result(s) for '${inputRef.current?.value}'`}</h1>
         <div className={classes.container}>
@@ -117,7 +122,11 @@ const HomePage: React.FC<Props> = ({ data }) => {
 
       <section
         className={classes.trending}
-        hidden={searchResults.length === 0 ? false : true}
+        hidden={
+          inputRef.current === null || inputRef.current?.value === ""
+            ? false
+            : true
+        }
       >
         <h1>Trending</h1>
         <div className={classes.slider}>
@@ -170,8 +179,12 @@ const HomePage: React.FC<Props> = ({ data }) => {
       </section>
 
       <section
-        className={classes.recommended}
-        hidden={searchResults.length === 0 ? false : true}
+        className={classes.list}
+        hidden={
+          inputRef.current === null || inputRef.current?.value === ""
+            ? false
+            : true
+        }
       >
         <h1>Recommended for you</h1>
         <div className={classes.container}>

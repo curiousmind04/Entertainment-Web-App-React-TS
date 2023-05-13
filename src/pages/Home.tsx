@@ -5,9 +5,19 @@ import classes from "./Styles.module.css";
 
 type Props = {
   data: MediaItem[] | undefined;
+  onMovieBookmark: (movie: MediaItem) => void;
+  onTVBookmark: (series: MediaItem) => void;
+  movieBookmarks: MediaItem[];
+  tvBookmarks: MediaItem[];
 };
 
-const HomePage: React.FC<Props> = ({ data }) => {
+const HomePage: React.FC<Props> = ({
+  data,
+  onMovieBookmark,
+  onTVBookmark,
+  movieBookmarks,
+  tvBookmarks,
+}) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [searchResults, setSearchResults] = useState<MediaItem[]>([]);
 
@@ -71,9 +81,21 @@ const HomePage: React.FC<Props> = ({ data }) => {
             searchResults.map((item) => (
               <div className={classes.regularItem} key={item.title}>
                 <div className={classes.imageContainer}>
-                  <div className={classes.bookmark}>
+                  <div
+                    className={classes.bookmark}
+                    onClick={
+                      item.category === "Movie"
+                        ? onMovieBookmark.bind(null, item)
+                        : onTVBookmark.bind(null, item)
+                    }
+                  >
                     <img
-                      src="/assets/icon-bookmark-empty.svg"
+                      src={`/assets/icon-bookmark-${
+                        movieBookmarks.includes(item) ||
+                        tvBookmarks.includes(item)
+                          ? "full"
+                          : "empty"
+                      }.svg`}
                       alt="bookmark icon"
                     />
                   </div>
@@ -148,9 +170,21 @@ const HomePage: React.FC<Props> = ({ data }) => {
                   <img src="/assets/icon-play.svg" alt="play icon" />
                   <span>Play</span>
                 </div>
-                <div className={classes.bookmark}>
+                <div
+                  className={classes.bookmark}
+                  onClick={
+                    item.category === "Movie"
+                      ? onMovieBookmark.bind(null, item)
+                      : onTVBookmark.bind(null, item)
+                  }
+                >
                   <img
-                    src="/assets/icon-bookmark-empty.svg"
+                    src={`/assets/icon-bookmark-${
+                      movieBookmarks.includes(item) ||
+                      tvBookmarks.includes(item)
+                        ? "full"
+                        : "empty"
+                    }.svg`}
                     alt="bookmark icon"
                   />
                 </div>
@@ -192,9 +226,21 @@ const HomePage: React.FC<Props> = ({ data }) => {
             data.map((item) => (
               <div className={classes.regularItem} key={item.title}>
                 <div className={classes.imageContainer}>
-                  <div className={classes.bookmark}>
+                  <div
+                    className={classes.bookmark}
+                    onClick={
+                      item.category === "Movie"
+                        ? onMovieBookmark.bind(null, item)
+                        : onTVBookmark.bind(null, item)
+                    }
+                  >
                     <img
-                      src="/assets/icon-bookmark-empty.svg"
+                      src={`/assets/icon-bookmark-${
+                        movieBookmarks.includes(item) ||
+                        tvBookmarks.includes(item)
+                          ? "full"
+                          : "empty"
+                      }.svg`}
                       alt="bookmark icon"
                     />
                   </div>

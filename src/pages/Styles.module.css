@@ -88,6 +88,10 @@
   left: 1rem;
 }
 
+.list {
+  margin-bottom: 1.5rem;
+}
+
 .bookmark {
   background-color: var(--dark-blue);
   opacity: 0.5;
@@ -180,7 +184,7 @@
 }
 
 .container {
-  /* width: 344px; */
+  /* width: 306px; */
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
@@ -246,6 +250,21 @@
     filter: brightness(0) saturate(100%) invert(6%) sepia(24%) saturate(952%)
       hue-rotate(185deg) brightness(96%) contrast(97%);
   }
+}
+
+@media (max-width: 20.5rem) {
+  .search > input {
+    width: 100%;
+  }
+  .search > input::placeholder {
+    font-size: 0.9rem;
+  }
+  .container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 48rem) {
 }
 
 /* .play {

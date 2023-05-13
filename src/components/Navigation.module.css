@@ -13,14 +13,16 @@
 }
 
 .group {
-  height: 1rem;
+  /* height: 1rem; */
   display: flex;
+  align-items: center;
   gap: 1.5rem;
 }
 
-/* .group > .link {
-  cursor: pointer;
-} */
+.group > .link,
+.group > .active {
+  height: 20px;
+}
 
 .avatar {
   height: 1.5rem;

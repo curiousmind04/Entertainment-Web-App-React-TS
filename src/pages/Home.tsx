@@ -201,6 +201,8 @@ const HomePage: React.FC<Props> = ({
                       />
                       <span>{item.category}</span>
                     </div>
+                    <div className={classes.separateUse}></div>
+                    <span className={classes.ratingUse}>{item.rating}</span>
                   </div>
                   <h2>{item.title}</h2>
                 </div>

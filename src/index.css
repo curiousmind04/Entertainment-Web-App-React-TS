@@ -28,7 +28,7 @@ body {
 }
 
 main {
-  padding: 1.5rem 0 2.5rem 0;
+  padding: 1.5rem 0 2.3125rem 0;
 }
 
 .sr-only {
@@ -41,4 +41,10 @@ main {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap; /* added line */
   border: 0;
+}
+
+@media (min-width: 48rem) {
+  main {
+    padding: 2.0625rem 0 0.5rem 0;
+  }
 }

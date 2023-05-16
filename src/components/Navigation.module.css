@@ -61,6 +61,10 @@
     padding-top: 1.4375rem;
     padding-inline: 1.5625rem;
   }
+  .container {
+    height: 4.5rem;
+    border-radius: 0.625rem;
+  }
   .container > :first-child {
     width: 2rem;
   }
@@ -80,5 +84,36 @@
   .avatar {
     height: 2rem;
     aspect-ratio: 1;
+  }
+}
+
+@media (min-width: 70rem) {
+  .header {
+    /* width: 10.25rem; */
+    padding: 2rem 2.25rem 2rem 2rem;
+  }
+  .container {
+    height: 60rem;
+    padding: 2rem 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content auto min-content;
+  }
+  .container > :first-child {
+    width: 2rem;
+    justify-self: center;
+  }
+  .group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    align-self: flex-start;
+    padding-top: 4.75rem;
+  }
+  .avatar {
+    height: 2.5rem;
+    aspect-ratio: 1;
+    justify-self: center;
   }
 }

@@ -41,6 +41,7 @@ const MainNav = () => {
             <img src="/assets/icon-nav-bookmark.svg" alt="logo" />
           </NavLink>
         </div>
+
         <div className={classes.avatar}>
           <img src="/assets/image-avatar.png" alt="avatar" />
         </div>

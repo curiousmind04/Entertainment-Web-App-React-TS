@@ -388,3 +388,43 @@
     font-size: 1.125rem;
   }
 }
+
+@media (min-width: 70rem) {
+  .search {
+    margin-bottom: 2.125rem;
+    margin-right: 2.25rem;
+    margin-left: 0;
+  }
+  .trending {
+    margin-bottom: 2.5rem;
+  }
+  .trending > h1 {
+    margin-left: 0;
+  }
+  .slider {
+    padding-left: 0;
+    padding-right: 2.25rem;
+  }
+  .mediumMedia {
+    display: none;
+  }
+  .largeMedia {
+    display: block;
+  }
+  .list,
+  .searchResults {
+    margin-left: 0;
+    margin-right: 2.25rem;
+    margin-bottom: 2.5rem;
+  }
+  .container {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 76rem) {
+  .container {
+    gap: 2.5rem;
+  }
+}

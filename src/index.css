@@ -48,3 +48,14 @@ main {
     padding: 2.0625rem 0 0.5rem 0;
   }
 }
+
+@media (min-width: 70rem) {
+  #root {
+    display: grid;
+    grid-template-columns: 10.25rem 1fr;
+  }
+  main {
+    min-width: 0;
+    padding: 4rem 0 0.75rem 0;
+  }
+}

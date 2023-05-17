@@ -1,5 +1,7 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
 import { MediaItem } from "myTypes";
+import { AuthContext } from "../context/auth-context";
+import { useNavigate } from "react-router-dom";
 
 import classes from "./Styles.module.css";
 
@@ -20,6 +22,8 @@ const HomePage: React.FC<Props> = ({
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [searchResults, setSearchResults] = useState<MediaItem[]>([]);
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
 
   //   console.log(data);
 
@@ -48,6 +52,25 @@ const HomePage: React.FC<Props> = ({
   };
 
   //   console.log(searchResults);
+
+  const bookmarkHandler = (bookmark: MediaItem) => {
+    console.log(auth?.isLoggedIn);
+    if (!auth?.isLoggedIn) {
+      navigate("/auth");
+    } else if (bookmark.category === "Movie") {
+      console.log("movie");
+      onMovieBookmark(bookmark);
+    } else {
+      console.log("tv");
+      onTVBookmark(bookmark);
+    }
+  };
+
+  // onClick={
+  //   item.category === "Movie"
+  //     ? onMovieBookmark.bind(null, item)
+  //     : onTVBookmark.bind(null, item)
+  // }
 
   return (
     <>
@@ -83,11 +106,7 @@ const HomePage: React.FC<Props> = ({
                 <div className={classes.imageContainer}>
                   <div
                     className={classes.bookmark}
-                    onClick={
-                      item.category === "Movie"
-                        ? onMovieBookmark.bind(null, item)
-                        : onTVBookmark.bind(null, item)
-                    }
+                    onClick={bookmarkHandler.bind(null, item)}
                   >
                     <img
                       src={`/assets/icon-bookmark-${
@@ -172,11 +191,7 @@ const HomePage: React.FC<Props> = ({
                 </div>
                 <div
                   className={classes.bookmark}
-                  onClick={
-                    item.category === "Movie"
-                      ? onMovieBookmark.bind(null, item)
-                      : onTVBookmark.bind(null, item)
-                  }
+                  onClick={bookmarkHandler.bind(null, item)}
                 >
                   <img
                     src={`/assets/icon-bookmark-${
@@ -230,11 +245,7 @@ const HomePage: React.FC<Props> = ({
                 <div className={classes.imageContainer}>
                   <div
                     className={classes.bookmark}
-                    onClick={
-                      item.category === "Movie"
-                        ? onMovieBookmark.bind(null, item)
-                        : onTVBookmark.bind(null, item)
-                    }
+                    onClick={bookmarkHandler.bind(null, item)}
                   >
                     <img
                       src={`/assets/icon-bookmark-${

@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import { useEffect, useState } from "react";
 import { MediaItem } from "myTypes";
 
@@ -8,17 +12,22 @@ import MoviesPage from "./pages/Movies";
 import TVPage from "./pages/TV";
 import BookmarksPage from "./pages/Bookmarks";
 
+import { AuthContext } from "./context/auth-context";
+import { useAuth } from "./hooks/auth-hook";
+import AuthPage from "./pages/Auth";
+
 function App() {
   const [data, setData] = useState<MediaItem[]>();
   const [bookmarksMovies, setBookmarksMovies] = useState<MediaItem[]>([]);
   const [bookmarksTV, setBookmarksTV] = useState<MediaItem[]>([]);
+  const { token, login, logout, userId } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("data.json");
 
       if (!response.ok) {
-        console.log("error");
+        console.log("Could not fetch data");
         return;
       }
 
@@ -32,6 +41,7 @@ function App() {
   // console.log(data);
 
   const moviesBookmarksHandler = (movie: MediaItem) => {
+    console.log(movie);
     if (!bookmarksMovies.includes(movie)) {
       setBookmarksMovies((prevState) => prevState.concat(movie));
     } else {
@@ -54,63 +64,144 @@ function App() {
   // console.log(bookmarksMovies);
   // console.log(bookmarksTV);
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <RootLayout />,
-      children: [
-        {
-          index: true,
-          element: (
-            <HomePage
-              data={data}
-              onMovieBookmark={moviesBookmarksHandler}
-              onTVBookmark={tvBookmarksHandler}
-              movieBookmarks={bookmarksMovies}
-              tvBookmarks={bookmarksTV}
-            />
-          ),
-        },
-        {
-          path: "/movies",
-          element: (
-            <MoviesPage
-              data={data}
-              onMovieBookmark={moviesBookmarksHandler}
-              onTVBookmark={tvBookmarksHandler}
-              movieBookmarks={bookmarksMovies}
-              tvBookmarks={bookmarksTV}
-            />
-          ),
-        },
-        {
-          path: "/tv",
-          element: (
-            <TVPage
-              data={data}
-              onMovieBookmark={moviesBookmarksHandler}
-              onTVBookmark={tvBookmarksHandler}
-              movieBookmarks={bookmarksMovies}
-              tvBookmarks={bookmarksTV}
-            />
-          ),
-        },
-        {
-          path: "/bookmarks",
-          element: (
-            <BookmarksPage
-              onMovieBookmark={moviesBookmarksHandler}
-              onTVBookmark={tvBookmarksHandler}
-              movieBookmarks={bookmarksMovies}
-              tvBookmarks={bookmarksTV}
-            />
-          ),
-        },
-      ],
-    },
-  ]);
+  let router;
 
-  return <RouterProvider router={router} />;
+  if (token) {
+    router = createBrowserRouter([
+      {
+        path: "/",
+        element: <RootLayout />,
+        children: [
+          {
+            index: true,
+            element: (
+              <HomePage
+                data={data}
+                onMovieBookmark={moviesBookmarksHandler}
+                onTVBookmark={tvBookmarksHandler}
+                movieBookmarks={bookmarksMovies}
+                tvBookmarks={bookmarksTV}
+              />
+            ),
+          },
+          {
+            path: "/movies",
+            element: (
+              <MoviesPage
+                data={data}
+                onMovieBookmark={moviesBookmarksHandler}
+                onTVBookmark={tvBookmarksHandler}
+                movieBookmarks={bookmarksMovies}
+                tvBookmarks={bookmarksTV}
+              />
+            ),
+          },
+          {
+            path: "/tv",
+            element: (
+              <TVPage
+                data={data}
+                onMovieBookmark={moviesBookmarksHandler}
+                onTVBookmark={tvBookmarksHandler}
+                movieBookmarks={bookmarksMovies}
+                tvBookmarks={bookmarksTV}
+              />
+            ),
+          },
+          {
+            path: "/bookmarks",
+            element: (
+              <BookmarksPage
+                onMovieBookmark={moviesBookmarksHandler}
+                onTVBookmark={tvBookmarksHandler}
+                movieBookmarks={bookmarksMovies}
+                tvBookmarks={bookmarksTV}
+              />
+            ),
+          },
+          {
+            path: "/auth",
+            element: <AuthPage />,
+          },
+          {
+            path: "*",
+            element: <Navigate to="/" replace />,
+          },
+        ],
+      },
+    ]);
+  } else {
+    router = createBrowserRouter([
+      {
+        path: "/",
+        element: <RootLayout />,
+        children: [
+          {
+            index: true,
+            element: (
+              <HomePage
+                data={data}
+                onMovieBookmark={moviesBookmarksHandler}
+                onTVBookmark={tvBookmarksHandler}
+                movieBookmarks={bookmarksMovies}
+                tvBookmarks={bookmarksTV}
+              />
+            ),
+          },
+          {
+            path: "/movies",
+            element: (
+              <MoviesPage
+                data={data}
+                onMovieBookmark={moviesBookmarksHandler}
+                onTVBookmark={tvBookmarksHandler}
+                movieBookmarks={bookmarksMovies}
+                tvBookmarks={bookmarksTV}
+              />
+            ),
+          },
+          {
+            path: "/tv",
+            element: (
+              <TVPage
+                data={data}
+                onMovieBookmark={moviesBookmarksHandler}
+                onTVBookmark={tvBookmarksHandler}
+                movieBookmarks={bookmarksMovies}
+                tvBookmarks={bookmarksTV}
+              />
+            ),
+          },
+          {
+            path: "/auth",
+            element: <AuthPage />,
+          },
+          {
+            path: "/bookmarks",
+            element: <Navigate to="/auth" replace />,
+          },
+          {
+            path: "*",
+            element: <Navigate to="/" replace />,
+          },
+        ],
+      },
+    ]);
+  }
+
+  return (
+    <AuthContext.Provider
+      value={{
+        isLoggedIn: !!token,
+        token: token,
+        userId: userId,
+        login: login,
+        logout: logout,
+      }}
+    >
+      <RouterProvider router={router} />
+    </AuthContext.Provider>
+  );
 }
 
 export default App;

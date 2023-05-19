@@ -1,11 +1,12 @@
 import { NavLink } from "react-router-dom";
-// import { useContext } from "react";
+import { useContext } from "react";
 
 import classes from "./Navigation.module.css";
-// import { AuthContext } from "../context/auth-context";
+import { AuthContext } from "../context/auth-context";
 
 const MainNav = () => {
-  // const auth = useContext(AuthContext);
+  const auth = useContext(AuthContext);
+
   return (
     <header className={classes.header}>
       <div className={classes.container}>
@@ -55,15 +56,19 @@ const MainNav = () => {
           )} */}
         </div>
 
-        <div className={classes.avatar}>
-          <NavLink to="/auth">
-            <img src="/assets/image-avatar.png" alt="avatar" />
+        {auth?.isLoggedIn && (
+          <div className={classes.avatar}>
+            <NavLink to="/auth">
+              <img src="/assets/image-avatar.png" alt="avatar" />
+            </NavLink>
+          </div>
+        )}
+        {!auth?.isLoggedIn && (
+          <NavLink className={classes.login} to="/auth">
+            Login
           </NavLink>
-        </div>
+        )}
 
-        {/* <div className={classes.avatar}>
-          <img src="/assets/image-avatar.png" alt="avatar" />
-        </div> */}
         <h1 className="sr-only">Entertainment Web App</h1>
       </div>
     </header>

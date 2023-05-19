@@ -52,6 +52,8 @@ export const useAuth = () => {
     setToken(undefined);
     setTokenExpirationDate(undefined);
     setUserId(undefined);
+    setTVBookmarks([]);
+    setMovieBookmarks([]);
     localStorage.removeItem("userData");
   }, []);
 

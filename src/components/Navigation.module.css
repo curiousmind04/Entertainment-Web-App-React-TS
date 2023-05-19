@@ -42,6 +42,13 @@
   width: 100%;
 }
 
+.login {
+  color: var(--pure-white);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 /* used codepen to get filter values to change image svg color */
 
 .group > .active {
@@ -53,6 +60,16 @@
   .group > .link:hover {
     filter: brightness(0) saturate(100%) invert(43%) sepia(90%) saturate(1898%)
       hue-rotate(332deg) brightness(98%) contrast(102%);
+  }
+}
+
+@media (max-width: 17.5rem) {
+  .container {
+    justify-content: center;
+    gap: 1.5rem;
+  }
+  .container > :first-child {
+    display: none;
   }
 }
 
@@ -114,6 +131,9 @@
   .avatar {
     height: 2.5rem;
     aspect-ratio: 1;
+    justify-self: center;
+  }
+  .login {
     justify-self: center;
   }
 }

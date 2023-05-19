@@ -35,3 +35,17 @@ from changing when using Chrome autocomplete */
   -webkit-transition-delay: 9999s;
   -webkit-transition: color 9999s ease-out, background-color 9999s ease-out;
 }
+
+.errorText {
+  color: var(--red-color);
+  font-size: 0.8125rem;
+  margin-top: 0.5rem;
+}
+
+.input:has(+ .errorText) {
+  border-bottom: 1px solid var(--red-color) !important;
+}
+
+/* .errorText ~ .input {
+  border-bottom: 1px solid var(--red-color) !important;
+} */

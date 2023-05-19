@@ -101,7 +101,9 @@ const Input: React.FC<Props> = (props) => {
         {props.label}
       </label>
       {element}
-      {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}
+      {!inputState.isValid && inputState.isTouched && (
+        <p className={classes.errorText}>{props.errorText}</p>
+      )}
     </div>
   );
 };

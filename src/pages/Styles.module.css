@@ -277,6 +277,9 @@ from changing when using Chrome autocomplete */
 }
 
 @media (max-width: 20.5rem) {
+  .search {
+    padding-left: 2rem;
+  }
   .search > input {
     width: 100%;
   }

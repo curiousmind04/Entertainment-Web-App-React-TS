@@ -61,6 +61,9 @@
     filter: brightness(0) saturate(100%) invert(43%) sepia(90%) saturate(1898%)
       hue-rotate(332deg) brightness(98%) contrast(102%);
   }
+  .login:hover {
+    color: var(--red-color);
+  }
 }
 
 @media (max-width: 17.5rem) {

@@ -83,7 +83,7 @@ const HomePage: React.FC<Props> = ({
             : false
         }
       >
-        <h1>{`Found ${searchResults.length} result(s) for '${inputRef.current?.value}'`}</h1>
+        <h2>{`Found ${searchResults.length} result(s) for '${inputRef.current?.value}'`}</h2>
         <div className={classes.container}>
           {searchResults.length > 0 &&
             searchResults.map((item) => (
@@ -143,7 +143,7 @@ const HomePage: React.FC<Props> = ({
                     <div className={classes.separate}></div>
                     <span>{item.rating}</span>
                   </div>
-                  <h2>{item.title}</h2>
+                  <h3>{item.title}</h3>
                 </div>
               </div>
             ))}
@@ -158,7 +158,7 @@ const HomePage: React.FC<Props> = ({
             : true
         }
       >
-        <h1>Trending</h1>
+        <h2>Trending</h2>
         <div className={classes.slider}>
           {trending &&
             trending.length > 0 &&
@@ -212,7 +212,7 @@ const HomePage: React.FC<Props> = ({
                     <div className={classes.separateUse}></div>
                     <span className={classes.ratingUse}>{item.rating}</span>
                   </div>
-                  <h2>{item.title}</h2>
+                  <h3>{item.title}</h3>
                 </div>
                 <div className={classes.rating}>
                   <p>{item.rating}</p>
@@ -230,7 +230,7 @@ const HomePage: React.FC<Props> = ({
             : true
         }
       >
-        <h1>Recommended for you</h1>
+        <h2>Recommended for you</h2>
         <div className={classes.container}>
           {data &&
             data.map((item) => (
@@ -290,7 +290,7 @@ const HomePage: React.FC<Props> = ({
                     <div className={classes.separate}></div>
                     <span>{item.rating}</span>
                   </div>
-                  <h2>{item.title}</h2>
+                  <h3>{item.title}</h3>
                 </div>
               </div>
             ))}

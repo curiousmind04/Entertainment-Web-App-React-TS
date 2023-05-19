@@ -79,7 +79,7 @@ const TVPage: React.FC<Props> = ({
             : false
         }
       >
-        <h1>{`Found ${searchResults.length} result(s) for '${inputRef.current?.value}'`}</h1>
+        <h2>{`Found ${searchResults.length} result(s) for '${inputRef.current?.value}'`}</h2>
         <div className={classes.container}>
           {searchResults.length > 0 &&
             searchResults.map((item) => (
@@ -136,7 +136,7 @@ const TVPage: React.FC<Props> = ({
                     <div className={classes.separate}></div>
                     <span>{item.rating}</span>
                   </div>
-                  <h2>{item.title}</h2>
+                  <h3>{item.title}</h3>
                 </div>
               </div>
             ))}
@@ -151,7 +151,7 @@ const TVPage: React.FC<Props> = ({
             : true
         }
       >
-        <h1>TV Series</h1>
+        <h2>TV Series</h2>
         <div className={classes.container}>
           {tvSeries &&
             tvSeries.map((item) => (
@@ -208,7 +208,7 @@ const TVPage: React.FC<Props> = ({
                     <div className={classes.separate}></div>
                     <span>{item.rating}</span>
                   </div>
-                  <h2>{item.title}</h2>
+                  <h3>{item.title}</h3>
                 </div>
               </div>
             ))}

@@ -56,13 +56,13 @@ from changing when using Chrome autocomplete */
   margin-bottom: 1.5rem;
 }
 
-.trending > h1 {
+.trending > h2 {
   margin-left: 1rem;
 }
 
-.trending > h1,
-.list > h1,
-.searchResults > h1 {
+.trending > h2,
+.list > h2,
+.searchResults > h2 {
   color: var(--pure-white);
   font-size: 1.25rem;
   font-weight: 300;
@@ -197,13 +197,13 @@ from changing when using Chrome autocomplete */
   color: var(--pure-white);
 }
 
-.info > h2 {
+.info > h3 {
   color: var(--pure-white);
   font-size: 0.9375rem;
   font-weight: 500;
 }
 
-.regularItem .info > h2 {
+.regularItem .info > h3 {
   font-size: 0.875rem;
 }
 
@@ -312,12 +312,12 @@ from changing when using Chrome autocomplete */
   .trending {
     margin-bottom: 2.4375rem;
   }
-  .trending > h1 {
+  .trending > h2 {
     margin-left: 1.5625rem;
   }
-  .trending > h1,
-  .list > h1,
-  .searchResults > h1 {
+  .trending > h2,
+  .list > h2,
+  .searchResults > h2 {
     font-size: 2rem;
     margin-bottom: 1.5625rem;
   }
@@ -375,10 +375,10 @@ from changing when using Chrome autocomplete */
   .rating {
     display: none;
   }
-  .info > h2 {
+  .info > h3 {
     font-size: 1.5rem;
   }
-  .regularItem .info > h2 {
+  .regularItem .info > h3 {
     font-size: 1.125rem;
   }
   .container {
@@ -414,7 +414,7 @@ from changing when using Chrome autocomplete */
   .trending {
     margin-bottom: 2.5rem;
   }
-  .trending > h1 {
+  .trending > h2 {
     margin-left: 0;
   }
   .slider {

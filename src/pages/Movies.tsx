@@ -77,7 +77,7 @@ const MoviesPage: React.FC<Props> = ({
             : false
         }
       >
-        <h1>{`Found ${searchResults.length} result(s) for '${inputRef.current?.value}'`}</h1>
+        <h2>{`Found ${searchResults.length} result(s) for '${inputRef.current?.value}'`}</h2>
         <div className={classes.container}>
           {searchResults.length > 0 &&
             searchResults.map((item) => (
@@ -134,7 +134,7 @@ const MoviesPage: React.FC<Props> = ({
                     <div className={classes.separate}></div>
                     <span>{item.rating}</span>
                   </div>
-                  <h2>{item.title}</h2>
+                  <h3>{item.title}</h3>
                 </div>
               </div>
             ))}
@@ -149,7 +149,7 @@ const MoviesPage: React.FC<Props> = ({
             : true
         }
       >
-        <h1>Movies</h1>
+        <h2>Movies</h2>
         <div className={classes.container}>
           {movies &&
             movies.map((item) => (
@@ -206,7 +206,7 @@ const MoviesPage: React.FC<Props> = ({
                     <div className={classes.separate}></div>
                     <span>{item.rating}</span>
                   </div>
-                  <h2>{item.title}</h2>
+                  <h3>{item.title}</h3>
                 </div>
               </div>
             ))}

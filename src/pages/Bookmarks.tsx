@@ -64,7 +64,7 @@ const BookmarksPage: React.FC<Props> = ({
             : false
         }
       >
-        <h1>{`Found ${searchResults.length} result(s) for '${inputRef.current?.value}'`}</h1>
+        <h2>{`Found ${searchResults.length} result(s) for '${inputRef.current?.value}'`}</h2>
         <div className={classes.container}>
           {searchResults.length > 0 &&
             searchResults.map((item) => (
@@ -124,7 +124,7 @@ const BookmarksPage: React.FC<Props> = ({
                     <div className={classes.separate}></div>
                     <span>{item.rating}</span>
                   </div>
-                  <h2>{item.title}</h2>
+                  <h3>{item.title}</h3>
                 </div>
               </div>
             ))}
@@ -139,7 +139,7 @@ const BookmarksPage: React.FC<Props> = ({
             : true
         }
       >
-        <h1>Bookmarked Movies</h1>
+        <h2>Bookmarked Movies</h2>
         <div className={classes.container}>
           {movieBookmarks &&
             movieBookmarks.map((item) => (
@@ -199,7 +199,7 @@ const BookmarksPage: React.FC<Props> = ({
                     <div className={classes.separate}></div>
                     <span>{item.rating}</span>
                   </div>
-                  <h2>{item.title}</h2>
+                  <h3>{item.title}</h3>
                 </div>
               </div>
             ))}
@@ -214,7 +214,7 @@ const BookmarksPage: React.FC<Props> = ({
             : true
         }
       >
-        <h1>Bookmarked TV Series</h1>
+        <h2>Bookmarked TV Series</h2>
         <div className={classes.container}>
           {tvBookmarks &&
             tvBookmarks.map((item) => (
@@ -274,7 +274,7 @@ const BookmarksPage: React.FC<Props> = ({
                     <div className={classes.separate}></div>
                     <span>{item.rating}</span>
                   </div>
-                  <h2>{item.title}</h2>
+                  <h3>{item.title}</h3>
                 </div>
               </div>
             ))}

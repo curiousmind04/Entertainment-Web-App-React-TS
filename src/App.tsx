@@ -14,20 +14,29 @@ import BookmarksPage from "./pages/Bookmarks";
 
 import { AuthContext } from "./context/auth-context";
 import { useAuth } from "./hooks/auth-hook";
+import { useHttpClient } from "./hooks/http-hook";
 import AuthPage from "./pages/Auth";
 
 function App() {
   const [data, setData] = useState<MediaItem[]>();
-  const [bookmarksMovies, setBookmarksMovies] = useState<MediaItem[]>([]);
-  const [bookmarksTV, setBookmarksTV] = useState<MediaItem[]>([]);
-  const { token, login, logout, userId } = useAuth();
+  const {
+    token,
+    login,
+    logout,
+    userId,
+    movieBookmarks,
+    movieBookmarksHandler,
+    tvBookmarks,
+    tvBookmarksHandler,
+    tokenExpirationDate,
+  } = useAuth();
+  const { sendRequest } = useHttpClient();
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("data.json");
 
       if (!response.ok) {
-        console.log("Could not fetch data");
         return;
       }
 
@@ -38,31 +47,107 @@ function App() {
     fetchData();
   }, []);
 
-  // console.log(data);
-
-  const moviesBookmarksHandler = (movie: MediaItem) => {
-    console.log(movie);
-    if (!bookmarksMovies.includes(movie)) {
-      setBookmarksMovies((prevState) => prevState.concat(movie));
+  const moviesHandler = async (movie: MediaItem) => {
+    if (!movieBookmarks.some((bookmark) => bookmark.title === movie.title)) {
+      const bookmarks = [...movieBookmarks, movie];
+      movieBookmarksHandler(bookmarks);
+      try {
+        await sendRequest(
+          import.meta.env.VITE_REACT_APP_BACKEND_URL +
+            "/users/addMovieBookmark",
+          "POST",
+          JSON.stringify({
+            bookmark: movie,
+          }),
+          {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          }
+        );
+      } catch (err) {
+        alert(err);
+      }
     } else {
-      setBookmarksMovies((prevState) =>
-        prevState.filter((item) => item !== movie)
+      const bookmarks = movieBookmarks.filter(
+        (item) => item.title !== movie.title
       );
+      movieBookmarksHandler(bookmarks);
+      try {
+        await sendRequest(
+          import.meta.env.VITE_REACT_APP_BACKEND_URL +
+            "/users/removeMovieBookmark",
+          "DELETE",
+          JSON.stringify({
+            bookmark: movie,
+          }),
+          {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          }
+        );
+      } catch (err) {
+        alert(err);
+      }
     }
   };
 
-  const tvBookmarksHandler = (series: MediaItem) => {
-    if (!bookmarksTV.includes(series)) {
-      setBookmarksTV((prevState) => prevState.concat(series));
+  const tvHandler = async (series: MediaItem) => {
+    if (!tvBookmarks.some((bookmark) => bookmark.title === series.title)) {
+      const bookmarks = [...tvBookmarks, series];
+      tvBookmarksHandler(bookmarks);
+      try {
+        await sendRequest(
+          import.meta.env.VITE_REACT_APP_BACKEND_URL + "/users/addTVBookmark",
+          "POST",
+          JSON.stringify({
+            bookmark: series,
+          }),
+          {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          }
+        );
+      } catch (err) {
+        alert(err);
+      }
     } else {
-      setBookmarksTV((prevState) =>
-        prevState.filter((item) => item !== series)
+      const bookmarks = tvBookmarks.filter(
+        (item) => item.title !== series.title
       );
+      tvBookmarksHandler(bookmarks);
+      try {
+        await sendRequest(
+          import.meta.env.VITE_REACT_APP_BACKEND_URL +
+            "/users/removeTVBookmark",
+          "DELETE",
+          JSON.stringify({
+            bookmark: series,
+          }),
+          {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          }
+        );
+      } catch (err) {
+        alert(err);
+      }
     }
   };
 
-  // console.log(bookmarksMovies);
-  // console.log(bookmarksTV);
+  useEffect(() => {
+    if (tokenExpirationDate) {
+      localStorage.setItem(
+        "userData",
+        JSON.stringify({
+          userId: userId,
+          token: token,
+          expiration: tokenExpirationDate.toISOString(),
+          movieBookmarks: movieBookmarks,
+          tvBookmarks: tvBookmarks,
+        })
+      );
+    }
+  }, [movieBookmarks, tvBookmarks, token, userId, tokenExpirationDate]);
 
   let router;
 
@@ -77,10 +162,10 @@ function App() {
             element: (
               <HomePage
                 data={data}
-                onMovieBookmark={moviesBookmarksHandler}
-                onTVBookmark={tvBookmarksHandler}
-                movieBookmarks={bookmarksMovies}
-                tvBookmarks={bookmarksTV}
+                onMovieBookmark={moviesHandler}
+                onTVBookmark={tvHandler}
+                movieBookmarks={movieBookmarks}
+                tvBookmarks={tvBookmarks}
               />
             ),
           },
@@ -89,10 +174,10 @@ function App() {
             element: (
               <MoviesPage
                 data={data}
-                onMovieBookmark={moviesBookmarksHandler}
-                onTVBookmark={tvBookmarksHandler}
-                movieBookmarks={bookmarksMovies}
-                tvBookmarks={bookmarksTV}
+                onMovieBookmark={moviesHandler}
+                onTVBookmark={tvHandler}
+                movieBookmarks={movieBookmarks}
+                tvBookmarks={tvBookmarks}
               />
             ),
           },
@@ -101,10 +186,10 @@ function App() {
             element: (
               <TVPage
                 data={data}
-                onMovieBookmark={moviesBookmarksHandler}
-                onTVBookmark={tvBookmarksHandler}
-                movieBookmarks={bookmarksMovies}
-                tvBookmarks={bookmarksTV}
+                onMovieBookmark={moviesHandler}
+                onTVBookmark={tvHandler}
+                movieBookmarks={movieBookmarks}
+                tvBookmarks={tvBookmarks}
               />
             ),
           },
@@ -112,10 +197,10 @@ function App() {
             path: "/bookmarks",
             element: (
               <BookmarksPage
-                onMovieBookmark={moviesBookmarksHandler}
-                onTVBookmark={tvBookmarksHandler}
-                movieBookmarks={bookmarksMovies}
-                tvBookmarks={bookmarksTV}
+                onMovieBookmark={moviesHandler}
+                onTVBookmark={tvHandler}
+                movieBookmarks={movieBookmarks}
+                tvBookmarks={tvBookmarks}
               />
             ),
           },
@@ -141,10 +226,10 @@ function App() {
             element: (
               <HomePage
                 data={data}
-                onMovieBookmark={moviesBookmarksHandler}
-                onTVBookmark={tvBookmarksHandler}
-                movieBookmarks={bookmarksMovies}
-                tvBookmarks={bookmarksTV}
+                onMovieBookmark={moviesHandler}
+                onTVBookmark={tvHandler}
+                movieBookmarks={movieBookmarks}
+                tvBookmarks={tvBookmarks}
               />
             ),
           },
@@ -153,10 +238,10 @@ function App() {
             element: (
               <MoviesPage
                 data={data}
-                onMovieBookmark={moviesBookmarksHandler}
-                onTVBookmark={tvBookmarksHandler}
-                movieBookmarks={bookmarksMovies}
-                tvBookmarks={bookmarksTV}
+                onMovieBookmark={moviesHandler}
+                onTVBookmark={tvHandler}
+                movieBookmarks={movieBookmarks}
+                tvBookmarks={tvBookmarks}
               />
             ),
           },
@@ -165,10 +250,10 @@ function App() {
             element: (
               <TVPage
                 data={data}
-                onMovieBookmark={moviesBookmarksHandler}
-                onTVBookmark={tvBookmarksHandler}
-                movieBookmarks={bookmarksMovies}
-                tvBookmarks={bookmarksTV}
+                onMovieBookmark={moviesHandler}
+                onTVBookmark={tvHandler}
+                movieBookmarks={movieBookmarks}
+                tvBookmarks={tvBookmarks}
               />
             ),
           },
@@ -197,6 +282,10 @@ function App() {
         userId: userId,
         login: login,
         logout: logout,
+        movieBookmarks: movieBookmarks,
+        movieBookmarksHandler: movieBookmarksHandler,
+        tvBookmarks: tvBookmarks,
+        tvBookmarksHandler: tvBookmarksHandler,
       }}
     >
       <RouterProvider router={router} />

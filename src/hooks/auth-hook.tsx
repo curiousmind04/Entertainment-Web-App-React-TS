@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { MediaItem } from "myTypes";
 
 let logoutTimer: ReturnType<typeof setTimeout>;
 
@@ -8,9 +9,25 @@ export const useAuth = () => {
     Date | undefined
   >();
   const [userId, setUserId] = useState<string | undefined>();
+  const [movieBookmarks, setMovieBookmarks] = useState<MediaItem[]>([]);
+  const [tvBookmarks, setTVBookmarks] = useState<MediaItem[]>([]);
+
+  const movieBookmarksHandler = (movieBookmarks: MediaItem[]) => {
+    setMovieBookmarks(movieBookmarks);
+  };
+
+  const tvBookmarksHandler = (tvBookmarks: MediaItem[]) => {
+    setTVBookmarks(tvBookmarks);
+  };
 
   const login = useCallback(
-    (uid: string, token: string, expirationDate: Date | undefined) => {
+    (
+      uid: string,
+      token: string,
+      movieBookmarks: MediaItem[],
+      tvBookmarks: MediaItem[],
+      expirationDate: Date | undefined
+    ) => {
       setToken(token);
       setUserId(uid);
 
@@ -23,6 +40,8 @@ export const useAuth = () => {
           userId: uid,
           token: token,
           expiration: tokenExpirationDate.toISOString(),
+          movieBookmarks: movieBookmarks,
+          tvBookmarks: tvBookmarks,
         })
       );
     },
@@ -63,10 +82,24 @@ export const useAuth = () => {
       login(
         storedData.userId,
         storedData.token,
+        storedData.movieBookmarks,
+        storedData.tvBookmarks,
         new Date(storedData.expiration)
       );
+      setMovieBookmarks(storedData.movieBookmarks);
+      setTVBookmarks(storedData.tvBookmarks);
     }
   }, [login]);
 
-  return { token, login, logout, userId };
+  return {
+    token,
+    login,
+    logout,
+    userId,
+    movieBookmarks,
+    movieBookmarksHandler,
+    tvBookmarks,
+    tvBookmarksHandler,
+    tokenExpirationDate: tokenExpirationDate,
+  };
 };

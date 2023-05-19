@@ -21,8 +21,6 @@ const AuthPage = () => {
     false
   );
 
-  // console.log(formState);
-
   const switchModeHandler = () => {
     if (!isLoginMode) {
       setFormData(
@@ -57,13 +55,19 @@ const AuthPage = () => {
             "Content-Type": "application/json",
           }
         );
-        auth?.login(responseData.userId, responseData.token);
+        auth?.login(
+          responseData.userId,
+          responseData.token,
+          responseData.movieBookmarks,
+          responseData.tvBookmarks
+        );
+        auth?.movieBookmarksHandler(responseData.movieBookmarks);
+        auth?.tvBookmarksHandler(responseData.tvBookmarks);
       } catch (err) {
-        console.log(err);
+        alert(err);
       }
     } else {
       try {
-        // console.log(formState.inputs.passwordRepeat?.value);
         if (
           formState.inputs.passwordRepeat?.value ===
           formState.inputs.password.value
@@ -79,13 +83,18 @@ const AuthPage = () => {
               "Content-Type": "application/json",
             }
           );
-          auth?.login(responseData.userId, responseData.token);
+          auth?.login(
+            responseData.userId,
+            responseData.token,
+            responseData.movieBookmarks,
+            responseData.tvBookmarks
+          );
         } else {
           console.log("passwords don't match");
           alert("Error: Passwords do not match!");
         }
       } catch (err) {
-        console.log(err);
+        alert(err);
       }
     }
   };

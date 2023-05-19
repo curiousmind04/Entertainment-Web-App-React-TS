@@ -16,9 +16,7 @@ type Props = {
 const MoviesPage: React.FC<Props> = ({
   data,
   onMovieBookmark,
-  onTVBookmark,
   movieBookmarks,
-  tvBookmarks,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [searchResults, setSearchResults] = useState<MediaItem[]>([]);
@@ -46,15 +44,10 @@ const MoviesPage: React.FC<Props> = ({
   };
 
   const bookmarkHandler = (bookmark: MediaItem) => {
-    console.log(auth?.isLoggedIn);
     if (!auth?.isLoggedIn) {
       navigate("/auth");
     } else if (bookmark.category === "Movie") {
-      console.log("movie");
       onMovieBookmark(bookmark);
-    } else {
-      console.log("tv");
-      onTVBookmark(bookmark);
     }
   };
 
@@ -96,8 +89,9 @@ const MoviesPage: React.FC<Props> = ({
                   >
                     <img
                       src={`/assets/icon-bookmark-${
-                        movieBookmarks.includes(item) ||
-                        tvBookmarks.includes(item)
+                        movieBookmarks.some(
+                          (bookmark) => bookmark.title === item.title
+                        )
                           ? "full"
                           : "empty"
                       }.svg`}
@@ -167,8 +161,9 @@ const MoviesPage: React.FC<Props> = ({
                   >
                     <img
                       src={`/assets/icon-bookmark-${
-                        movieBookmarks.includes(item) ||
-                        tvBookmarks.includes(item)
+                        movieBookmarks.some(
+                          (bookmark) => bookmark.title === item.title
+                        )
                           ? "full"
                           : "empty"
                       }.svg`}

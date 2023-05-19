@@ -7,7 +7,7 @@ export const useHttpClient = () => {
     async (
       url: string,
       method: string,
-      body: string,
+      body: string | null,
       headers?: HeadersInit
     ) => {
       const httpAbortCtrl = new AbortController();
@@ -29,12 +29,10 @@ export const useHttpClient = () => {
         );
 
         if (!response.ok) {
-          console.log("response");
           throw new Error(responseData.message);
         }
         return responseData;
       } catch (err) {
-        console.log(err);
         alert(err);
       }
     },

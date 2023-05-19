@@ -25,13 +25,9 @@ const HomePage: React.FC<Props> = ({
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
 
-  //   console.log(data);
-
   const trending = data?.filter(
     (item) => item.thumbnail.trending !== undefined
   );
-
-  //   console.log(trending);
 
   const searchHandler = () => {
     const currentInput = inputRef.current?.value
@@ -51,26 +47,15 @@ const HomePage: React.FC<Props> = ({
     }
   };
 
-  //   console.log(searchResults);
-
   const bookmarkHandler = (bookmark: MediaItem) => {
-    console.log(auth?.isLoggedIn);
     if (!auth?.isLoggedIn) {
       navigate("/auth");
     } else if (bookmark.category === "Movie") {
-      console.log("movie");
       onMovieBookmark(bookmark);
     } else {
-      console.log("tv");
       onTVBookmark(bookmark);
     }
   };
-
-  // onClick={
-  //   item.category === "Movie"
-  //     ? onMovieBookmark.bind(null, item)
-  //     : onTVBookmark.bind(null, item)
-  // }
 
   return (
     <>
@@ -110,8 +95,12 @@ const HomePage: React.FC<Props> = ({
                   >
                     <img
                       src={`/assets/icon-bookmark-${
-                        movieBookmarks.includes(item) ||
-                        tvBookmarks.includes(item)
+                        movieBookmarks.some(
+                          (bookmark) => bookmark.title === item.title
+                        ) ||
+                        tvBookmarks.some(
+                          (bookmark) => bookmark.title === item.title
+                        )
                           ? "full"
                           : "empty"
                       }.svg`}
@@ -195,8 +184,12 @@ const HomePage: React.FC<Props> = ({
                 >
                   <img
                     src={`/assets/icon-bookmark-${
-                      movieBookmarks.includes(item) ||
-                      tvBookmarks.includes(item)
+                      movieBookmarks.some(
+                        (bookmark) => bookmark.title === item.title
+                      ) ||
+                      tvBookmarks.some(
+                        (bookmark) => bookmark.title === item.title
+                      )
                         ? "full"
                         : "empty"
                     }.svg`}
@@ -249,8 +242,12 @@ const HomePage: React.FC<Props> = ({
                   >
                     <img
                       src={`/assets/icon-bookmark-${
-                        movieBookmarks.includes(item) ||
-                        tvBookmarks.includes(item)
+                        movieBookmarks.some(
+                          (bookmark) => bookmark.title === item.title
+                        ) ||
+                        tvBookmarks.some(
+                          (bookmark) => bookmark.title === item.title
+                        )
                           ? "full"
                           : "empty"
                       }.svg`}

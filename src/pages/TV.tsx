@@ -15,9 +15,9 @@ type Props = {
 
 const TVPage: React.FC<Props> = ({
   data,
-  onMovieBookmark,
+
   onTVBookmark,
-  movieBookmarks,
+
   tvBookmarks,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -46,14 +46,9 @@ const TVPage: React.FC<Props> = ({
   };
 
   const bookmarkHandler = (bookmark: MediaItem) => {
-    console.log(auth?.isLoggedIn);
     if (!auth?.isLoggedIn) {
       navigate("/auth");
-    } else if (bookmark.category === "Movie") {
-      console.log("movie");
-      onMovieBookmark(bookmark);
-    } else {
-      console.log("tv");
+    } else if (bookmark.category === "TV Series") {
       onTVBookmark(bookmark);
     }
   };
@@ -96,8 +91,9 @@ const TVPage: React.FC<Props> = ({
                   >
                     <img
                       src={`/assets/icon-bookmark-${
-                        movieBookmarks.includes(item) ||
-                        tvBookmarks.includes(item)
+                        tvBookmarks.some(
+                          (bookmark) => bookmark.title === item.title
+                        )
                           ? "full"
                           : "empty"
                       }.svg`}
@@ -167,8 +163,9 @@ const TVPage: React.FC<Props> = ({
                   >
                     <img
                       src={`/assets/icon-bookmark-${
-                        movieBookmarks.includes(item) ||
-                        tvBookmarks.includes(item)
+                        tvBookmarks.some(
+                          (bookmark) => bookmark.title === item.title
+                        )
                           ? "full"
                           : "empty"
                       }.svg`}

@@ -159,7 +159,7 @@ const HomePage: React.FC<Props> = ({
         }
       >
         <h2>Trending</h2>
-        <div className={classes.slider}>
+        <div className={classes.slider} tabIndex={0}>
           {trending &&
             trending.length > 0 &&
             trending.map((item) => (

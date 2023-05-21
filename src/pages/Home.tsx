@@ -3,6 +3,7 @@ import { MediaItem } from "myTypes";
 import { AuthContext } from "../context/auth-context";
 import { useNavigate } from "react-router-dom";
 
+import LoadingSpinner from "../components/LoadingSpinner";
 import classes from "./Styles.module.css";
 
 type Props = {
@@ -11,6 +12,7 @@ type Props = {
   onTVBookmark: (series: MediaItem) => void;
   movieBookmarks: MediaItem[];
   tvBookmarks: MediaItem[];
+  isContentLoading: boolean;
 };
 
 const HomePage: React.FC<Props> = ({
@@ -19,6 +21,7 @@ const HomePage: React.FC<Props> = ({
   onTVBookmark,
   movieBookmarks,
   tvBookmarks,
+  isContentLoading,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [searchResults, setSearchResults] = useState<MediaItem[]>([]);
@@ -159,8 +162,19 @@ const HomePage: React.FC<Props> = ({
         }
       >
         <h2>Trending</h2>
+        {isContentLoading && (
+          <div className={classes.loading}>
+            (
+            <div className="center">
+              <LoadingSpinner />
+            </div>
+            )
+          </div>
+        )}
+
         <div className={classes.slider} tabIndex={0}>
-          {trending &&
+          {!isContentLoading &&
+            trending &&
             trending.length > 0 &&
             trending.map((item) => (
               <div className={classes.trendingItem} key={item.title}>
@@ -231,8 +245,19 @@ const HomePage: React.FC<Props> = ({
         }
       >
         <h2>Recommended for you</h2>
+        {isContentLoading && (
+          <div className={classes.loading}>
+            (
+            <div className="center">
+              <LoadingSpinner />
+            </div>
+            )
+          </div>
+        )}
+
         <div className={classes.container}>
-          {data &&
+          {!isContentLoading &&
+            data &&
             data.map((item) => (
               <div className={classes.regularItem} key={item.title}>
                 <div className={classes.imageContainer}>

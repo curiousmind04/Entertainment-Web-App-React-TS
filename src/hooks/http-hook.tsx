@@ -1,15 +1,17 @@
-import { useCallback, useRef, useEffect } from "react";
+import { useCallback, useRef, useEffect, useState } from "react";
 
 export const useHttpClient = () => {
   const activeHttpRequests = useRef<AbortController[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const sendRequest = useCallback(
     async (
       url: string,
-      method: string,
+      method: string | undefined,
       body: string | null,
       headers?: HeadersInit
     ) => {
+      setIsLoading(true);
       const httpAbortCtrl = new AbortController();
       activeHttpRequests.current.push(httpAbortCtrl);
       try {
@@ -31,8 +33,11 @@ export const useHttpClient = () => {
         if (!response.ok) {
           throw new Error(responseData.message);
         }
+        setIsLoading(false);
         return responseData;
       } catch (err) {
+        setIsLoading(false);
+        // console.log("error");
         alert(err);
       }
     },
@@ -45,5 +50,5 @@ export const useHttpClient = () => {
     };
   }, []);
 
-  return { sendRequest };
+  return { sendRequest, isLoading };
 };

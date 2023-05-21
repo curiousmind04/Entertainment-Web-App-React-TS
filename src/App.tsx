@@ -19,6 +19,7 @@ import AuthPage from "./pages/Auth";
 
 function App() {
   const [data, setData] = useState<MediaItem[]>();
+  const [isContentLoading, setIsContentLoading] = useState<boolean>(false);
   const {
     token,
     login,
@@ -34,14 +35,21 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("data.json");
+      try {
+        setIsContentLoading(true);
+        const response = await fetch("data.json");
 
-      if (!response.ok) {
-        return;
+        if (!response.ok) {
+          setIsContentLoading(false);
+          return;
+        }
+        setIsContentLoading(false);
+        const data = await response.json();
+
+        setData(data);
+      } catch (err) {
+        alert(err);
       }
-
-      const data = await response.json();
-      setData(data);
     };
 
     fetchData();
@@ -166,6 +174,7 @@ function App() {
                 onTVBookmark={tvHandler}
                 movieBookmarks={movieBookmarks}
                 tvBookmarks={tvBookmarks}
+                isContentLoading={isContentLoading}
               />
             ),
           },
@@ -178,6 +187,7 @@ function App() {
                 onTVBookmark={tvHandler}
                 movieBookmarks={movieBookmarks}
                 tvBookmarks={tvBookmarks}
+                isContentLoading={isContentLoading}
               />
             ),
           },
@@ -190,6 +200,7 @@ function App() {
                 onTVBookmark={tvHandler}
                 movieBookmarks={movieBookmarks}
                 tvBookmarks={tvBookmarks}
+                isContentLoading={isContentLoading}
               />
             ),
           },
@@ -230,6 +241,7 @@ function App() {
                 onTVBookmark={tvHandler}
                 movieBookmarks={movieBookmarks}
                 tvBookmarks={tvBookmarks}
+                isContentLoading={isContentLoading}
               />
             ),
           },
@@ -242,6 +254,7 @@ function App() {
                 onTVBookmark={tvHandler}
                 movieBookmarks={movieBookmarks}
                 tvBookmarks={tvBookmarks}
+                isContentLoading={isContentLoading}
               />
             ),
           },
@@ -254,6 +267,7 @@ function App() {
                 onTVBookmark={tvHandler}
                 movieBookmarks={movieBookmarks}
                 tvBookmarks={tvBookmarks}
+                isContentLoading={isContentLoading}
               />
             ),
           },

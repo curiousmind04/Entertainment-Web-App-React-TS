@@ -95,6 +95,12 @@
   margin-bottom: 0.5rem;
 }
 
+.loading {
+  width: 100%;
+  height: 6rem;
+  position: relative;
+}
+
 @media (hover: hover) {
   .submit:hover,
   .logout:hover {

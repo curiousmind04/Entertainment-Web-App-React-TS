@@ -3,6 +3,7 @@ import { MediaItem } from "myTypes";
 import { AuthContext } from "../context/auth-context";
 import { useNavigate } from "react-router-dom";
 
+import LoadingSpinner from "../components/LoadingSpinner";
 import classes from "./Styles.module.css";
 
 type Props = {
@@ -11,12 +12,14 @@ type Props = {
   onTVBookmark: (series: MediaItem) => void;
   movieBookmarks: MediaItem[];
   tvBookmarks: MediaItem[];
+  isContentLoading: boolean;
 };
 
 const MoviesPage: React.FC<Props> = ({
   data,
   onMovieBookmark,
   movieBookmarks,
+  isContentLoading,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [searchResults, setSearchResults] = useState<MediaItem[]>([]);
@@ -150,8 +153,18 @@ const MoviesPage: React.FC<Props> = ({
         }
       >
         <h2>Movies</h2>
+        {isContentLoading && (
+          <div className={classes.loading}>
+            (
+            <div className="center">
+              <LoadingSpinner />
+            </div>
+            )
+          </div>
+        )}
         <div className={classes.container}>
-          {movies &&
+          {!isContentLoading &&
+            movies &&
             movies.map((item) => (
               <div className={classes.regularItem} key={item.title}>
                 <div className={classes.imageContainer}>

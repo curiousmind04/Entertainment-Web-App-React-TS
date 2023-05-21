@@ -6,12 +6,13 @@ import { useForm } from "../hooks/form-hook";
 import { useHttpClient } from "../hooks/http-hook";
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from "../util/validators";
 
+import LoadingSpinner from "../components/LoadingSpinner";
 import classes from "./Auth.module.css";
 
 const AuthPage = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const { sendRequest } = useHttpClient();
+  const { sendRequest, isLoading } = useHttpClient();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -64,7 +65,7 @@ const AuthPage = () => {
         auth?.movieBookmarksHandler(responseData.movieBookmarks);
         auth?.tvBookmarksHandler(responseData.tvBookmarks);
       } catch (err) {
-        alert(err);
+        console.log(err);
       }
     } else {
       try {
@@ -94,7 +95,7 @@ const AuthPage = () => {
           alert("Error: Passwords do not match!");
         }
       } catch (err) {
-        alert(err);
+        console.log(err);
       }
     }
   };
@@ -109,12 +110,18 @@ const AuthPage = () => {
           </button>
         )}
       </div>
-
       {!auth?.isLoggedIn && (
         <div className={classes.demo}>
           <h2>Login Credentials for Demo Purposes:</h2>
           <p>Email: test@test.com</p>
           <p>Password: testers</p>
+        </div>
+      )}
+      {isLoading && (
+        <div className={classes.loading}>
+          <div className="center">
+            <LoadingSpinner />
+          </div>
         </div>
       )}
 

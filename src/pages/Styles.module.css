@@ -261,6 +261,12 @@ from changing when using Chrome autocomplete */
   font-size: 0.875rem;
 }
 
+.loading {
+  width: 100%;
+  height: 6rem;
+  position: relative;
+}
+
 @media (hover: hover) {
   .trendingItem:hover .play,
   .regularItem:hover .play {

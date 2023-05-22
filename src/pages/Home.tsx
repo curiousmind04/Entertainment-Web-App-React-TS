@@ -4,6 +4,7 @@ import { AuthContext } from "../context/auth-context";
 import { useNavigate } from "react-router-dom";
 
 import LoadingSpinner from "../components/LoadingSpinner";
+import ErrorModal from "../components/ErrorModal";
 import classes from "./Styles.module.css";
 
 type Props = {
@@ -13,6 +14,8 @@ type Props = {
   movieBookmarks: MediaItem[];
   tvBookmarks: MediaItem[];
   isContentLoading: boolean;
+  error: string | null;
+  onClear: () => void;
 };
 
 const HomePage: React.FC<Props> = ({
@@ -22,6 +25,8 @@ const HomePage: React.FC<Props> = ({
   movieBookmarks,
   tvBookmarks,
   isContentLoading,
+  error,
+  onClear,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [searchResults, setSearchResults] = useState<MediaItem[]>([]);
@@ -62,6 +67,14 @@ const HomePage: React.FC<Props> = ({
 
   return (
     <>
+      {typeof error === "string" && (
+        <ErrorModal
+          error={error}
+          match={null}
+          onClear={onClear}
+          onClearMatch={undefined}
+        />
+      )}
       <div className={classes.search}>
         <label htmlFor="search" className="sr-only">
           Search

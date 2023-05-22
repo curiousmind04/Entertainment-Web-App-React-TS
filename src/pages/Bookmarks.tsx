@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { MediaItem } from "myTypes";
 
+import ErrorModal from "../components/ErrorModal";
 import classes from "./Styles.module.css";
 
 type Props = {
@@ -8,6 +9,8 @@ type Props = {
   onTVBookmark: (series: MediaItem) => void;
   movieBookmarks: MediaItem[];
   tvBookmarks: MediaItem[];
+  error: string | null;
+  onClear: () => void;
 };
 
 const BookmarksPage: React.FC<Props> = ({
@@ -15,6 +18,8 @@ const BookmarksPage: React.FC<Props> = ({
   onTVBookmark,
   movieBookmarks,
   tvBookmarks,
+  error,
+  onClear,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [searchResults, setSearchResults] = useState<MediaItem[]>([]);
@@ -40,6 +45,14 @@ const BookmarksPage: React.FC<Props> = ({
 
   return (
     <>
+      {typeof error === "string" && (
+        <ErrorModal
+          error={error}
+          match={null}
+          onClear={onClear}
+          onClearMatch={undefined}
+        />
+      )}
       <div className={classes.search}>
         <label htmlFor="search" className="sr-only">
           Search

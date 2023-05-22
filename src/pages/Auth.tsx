@@ -7,12 +7,14 @@ import { useHttpClient } from "../hooks/http-hook";
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from "../util/validators";
 
 import LoadingSpinner from "../components/LoadingSpinner";
+import ErrorModal from "../components/ErrorModal";
 import classes from "./Auth.module.css";
 
 const AuthPage = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const { sendRequest, isLoading } = useHttpClient();
+  const [matchError, setMatchError] = useState<string | null>(null);
+  const { sendRequest, isLoading, error, clearError } = useHttpClient();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -92,7 +94,8 @@ const AuthPage = () => {
           );
         } else {
           console.log("passwords don't match");
-          alert("Error: Passwords do not match!");
+          setMatchError("Password don't match.");
+          // alert("Error: Passwords do not match!");
         }
       } catch (err) {
         console.log(err);
@@ -100,94 +103,116 @@ const AuthPage = () => {
     }
   };
 
-  return (
-    <div className={classes.container}>
-      <img src="/assets/logo.svg" alt="logo" />
-      <div>
-        {auth?.isLoggedIn && (
-          <button className={classes.logout} onClick={auth?.logout}>
-            LOGOUT
-          </button>
-        )}
-      </div>
-      {!auth?.isLoggedIn && (
-        <div className={classes.demo}>
-          <h2>Login Credentials for Demo Purposes:</h2>
-          <p>Email: test@test.com</p>
-          <p>Password: testers</p>
-        </div>
-      )}
-      {isLoading && (
-        <div className={classes.loading}>
-          <div className="center">
-            <LoadingSpinner />
-          </div>
-        </div>
-      )}
+  const clearMatchError = () => {
+    setMatchError(null);
+  };
 
-      {!auth?.isLoggedIn && (
-        <div className={classes.auth}>
-          <h2>{isLoginMode ? "Login" : "Sign up"}</h2>
-          <form onSubmit={authSubmitHandler}>
-            <Input
-              element="input"
-              id="email"
-              type="email"
-              label="E-Mail"
-              validators={[VALIDATOR_EMAIL()]}
-              errorText="Please enter a valid email address."
-              onInput={inputHandler}
-              initialValid={false}
-              initialValue=""
-              placeholder="Email address"
-            />
-            <Input
-              element="input"
-              id="password"
-              type="password"
-              label="Password"
-              validators={[VALIDATOR_MINLENGTH(6)]}
-              errorText="Please enter a valid password, at least 6 characters."
-              onInput={inputHandler}
-              initialValid={false}
-              initialValue=""
-              placeholder="Password"
-            />
-            {!isLoginMode && (
+  return (
+    <>
+      {typeof error === "string" && (
+        <ErrorModal
+          error={error}
+          onClear={clearError}
+          match={matchError}
+          onClearMatch={clearMatchError}
+        />
+      )}
+      {typeof matchError === "string" && (
+        <ErrorModal
+          error={error}
+          onClear={clearError}
+          match={matchError}
+          onClearMatch={clearMatchError}
+        />
+      )}
+      <div className={classes.container}>
+        <img src="/assets/logo.svg" alt="logo" />
+        <div>
+          {auth?.isLoggedIn && (
+            <button className={classes.logout} onClick={auth?.logout}>
+              LOGOUT
+            </button>
+          )}
+        </div>
+        {!auth?.isLoggedIn && (
+          <div className={classes.demo}>
+            <h2>Login Credentials for Demo Purposes:</h2>
+            <p>Email: test@test.com</p>
+            <p>Password: testers</p>
+          </div>
+        )}
+        {isLoading && (
+          <div className={classes.loading}>
+            <div className="center">
+              <LoadingSpinner />
+            </div>
+          </div>
+        )}
+
+        {!auth?.isLoggedIn && (
+          <div className={classes.auth}>
+            <h2>{isLoginMode ? "Login" : "Sign up"}</h2>
+            <form onSubmit={authSubmitHandler}>
               <Input
                 element="input"
-                id="passwordRepeat"
-                type="password"
-                label="Password Repeat"
-                validators={[VALIDATOR_MINLENGTH(6)]}
-                errorText="Please repeat the password."
+                id="email"
+                type="email"
+                label="E-Mail"
+                validators={[VALIDATOR_EMAIL()]}
+                errorText="Please enter a valid email address."
                 onInput={inputHandler}
                 initialValid={false}
                 initialValue=""
-                placeholder="Repeat Password"
+                placeholder="Email address"
               />
-            )}
-            <button
-              type="submit"
-              className={classes.submit}
-              disabled={!formState.isValid}
-            >
-              {isLoginMode ? "Login to your account" : "Create an account"}
-            </button>
-          </form>
-          <div className={classes.bottom}>
-            <span>
-              {isLoginMode
-                ? "Don't have an account?"
-                : "Already have an account?"}
-            </span>
-            <button onClick={switchModeHandler}>
-              {isLoginMode ? "Sign up" : "Login"}
-            </button>
+              <Input
+                element="input"
+                id="password"
+                type="password"
+                label="Password"
+                validators={[VALIDATOR_MINLENGTH(6)]}
+                errorText="Please enter a valid password, at least 6 characters."
+                onInput={inputHandler}
+                initialValid={false}
+                initialValue=""
+                placeholder="Password"
+              />
+              {!isLoginMode && (
+                <Input
+                  element="input"
+                  id="passwordRepeat"
+                  type="password"
+                  label="Password Repeat"
+                  validators={[VALIDATOR_MINLENGTH(6)]}
+                  errorText="Please repeat the password."
+                  onInput={inputHandler}
+                  initialValid={false}
+                  initialValue=""
+                  placeholder="Repeat Password"
+                />
+              )}
+              <button
+                type="submit"
+                className={classes.submit}
+                disabled={!formState.isValid}
+              >
+                {isLoginMode ? "Login to your account" : "Create an account"}
+              </button>
+            </form>
+            <div className={classes.bottom}>
+              <span>
+                {isLoginMode
+                  ? "Don't have an account?"
+                  : "Already have an account?"}
+              </span>
+              <button onClick={switchModeHandler}>
+                {isLoginMode ? "Sign up" : "Login"}
+              </button>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 };
 

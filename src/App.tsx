@@ -31,7 +31,7 @@ function App() {
     tvBookmarksHandler,
     tokenExpirationDate,
   } = useAuth();
-  const { sendRequest } = useHttpClient();
+  const { sendRequest, error, clearError } = useHttpClient();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,8 +57,6 @@ function App() {
 
   const moviesHandler = async (movie: MediaItem) => {
     if (!movieBookmarks.some((bookmark) => bookmark.title === movie.title)) {
-      const bookmarks = [...movieBookmarks, movie];
-      movieBookmarksHandler(bookmarks);
       try {
         await sendRequest(
           import.meta.env.VITE_REACT_APP_BACKEND_URL +
@@ -72,14 +70,13 @@ function App() {
             "Content-Type": "application/json",
           }
         );
+        const bookmarks = [...movieBookmarks, movie];
+        movieBookmarksHandler(bookmarks);
       } catch (err) {
-        alert(err);
+        // alert(err);
+        console.log(err);
       }
     } else {
-      const bookmarks = movieBookmarks.filter(
-        (item) => item.title !== movie.title
-      );
-      movieBookmarksHandler(bookmarks);
       try {
         await sendRequest(
           import.meta.env.VITE_REACT_APP_BACKEND_URL +
@@ -93,16 +90,19 @@ function App() {
             "Content-Type": "application/json",
           }
         );
+        const bookmarks = movieBookmarks.filter(
+          (item) => item.title !== movie.title
+        );
+        movieBookmarksHandler(bookmarks);
       } catch (err) {
-        alert(err);
+        // alert(err);
+        console.log(err);
       }
     }
   };
 
   const tvHandler = async (series: MediaItem) => {
     if (!tvBookmarks.some((bookmark) => bookmark.title === series.title)) {
-      const bookmarks = [...tvBookmarks, series];
-      tvBookmarksHandler(bookmarks);
       try {
         await sendRequest(
           import.meta.env.VITE_REACT_APP_BACKEND_URL + "/users/addTVBookmark",
@@ -115,14 +115,13 @@ function App() {
             "Content-Type": "application/json",
           }
         );
+        const bookmarks = [...tvBookmarks, series];
+        tvBookmarksHandler(bookmarks);
       } catch (err) {
-        alert(err);
+        // alert(err);
+        console.log(err);
       }
     } else {
-      const bookmarks = tvBookmarks.filter(
-        (item) => item.title !== series.title
-      );
-      tvBookmarksHandler(bookmarks);
       try {
         await sendRequest(
           import.meta.env.VITE_REACT_APP_BACKEND_URL +
@@ -136,8 +135,13 @@ function App() {
             "Content-Type": "application/json",
           }
         );
+        const bookmarks = tvBookmarks.filter(
+          (item) => item.title !== series.title
+        );
+        tvBookmarksHandler(bookmarks);
       } catch (err) {
-        alert(err);
+        // alert(err);
+        console.log(err);
       }
     }
   };
@@ -175,6 +179,8 @@ function App() {
                 movieBookmarks={movieBookmarks}
                 tvBookmarks={tvBookmarks}
                 isContentLoading={isContentLoading}
+                error={error}
+                onClear={clearError}
               />
             ),
           },
@@ -188,6 +194,8 @@ function App() {
                 movieBookmarks={movieBookmarks}
                 tvBookmarks={tvBookmarks}
                 isContentLoading={isContentLoading}
+                error={error}
+                onClear={clearError}
               />
             ),
           },
@@ -201,6 +209,8 @@ function App() {
                 movieBookmarks={movieBookmarks}
                 tvBookmarks={tvBookmarks}
                 isContentLoading={isContentLoading}
+                error={error}
+                onClear={clearError}
               />
             ),
           },
@@ -212,6 +222,8 @@ function App() {
                 onTVBookmark={tvHandler}
                 movieBookmarks={movieBookmarks}
                 tvBookmarks={tvBookmarks}
+                error={error}
+                onClear={clearError}
               />
             ),
           },
@@ -242,6 +254,8 @@ function App() {
                 movieBookmarks={movieBookmarks}
                 tvBookmarks={tvBookmarks}
                 isContentLoading={isContentLoading}
+                error={error}
+                onClear={clearError}
               />
             ),
           },
@@ -255,6 +269,8 @@ function App() {
                 movieBookmarks={movieBookmarks}
                 tvBookmarks={tvBookmarks}
                 isContentLoading={isContentLoading}
+                error={error}
+                onClear={clearError}
               />
             ),
           },
@@ -268,6 +284,8 @@ function App() {
                 movieBookmarks={movieBookmarks}
                 tvBookmarks={tvBookmarks}
                 isContentLoading={isContentLoading}
+                error={error}
+                onClear={clearError}
               />
             ),
           },

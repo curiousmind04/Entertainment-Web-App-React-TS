@@ -25,6 +25,7 @@ body {
   font-weight: 300;
   background: var(--dark-blue);
   min-height: 100vh;
+  position: relative;
 }
 
 main {

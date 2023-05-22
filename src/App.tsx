@@ -63,7 +63,7 @@ function App() {
             "/users/addMovieBookmark",
           "POST",
           JSON.stringify({
-            bookmark: "movie",
+            bookmark: movie,
           }),
           {
             Authorization: "Bearer " + token,
@@ -83,7 +83,7 @@ function App() {
             "/users/removeMovieBookmark",
           "DELETE",
           JSON.stringify({
-            bookmark: "movie",
+            bookmark: movie,
           }),
           {
             Authorization: "Bearer " + token,
@@ -108,7 +108,7 @@ function App() {
           import.meta.env.VITE_REACT_APP_BACKEND_URL + "/users/addTVBookmark",
           "POST",
           JSON.stringify({
-            bookmark: "series",
+            bookmark: series,
           }),
           {
             Authorization: "Bearer " + token,
@@ -128,7 +128,7 @@ function App() {
             "/users/removeTVBookmark",
           "DELETE",
           JSON.stringify({
-            bookmark: "series",
+            bookmark: series,
           }),
           {
             Authorization: "Bearer " + token,

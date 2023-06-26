@@ -35,8 +35,10 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://www.frontendmentor.io/solutions/entertainment-web-app-fullstack-app-typescript-ZTkjEbOkSw)
-- Live Site URL: [Add live site URL here](https://entertainment-web-app-reactts-c04.netlify.app/)
+- Solution URL: [Frontend Mentor Solution Page](https://www.frontendmentor.io/solutions/entertainment-web-app-fullstack-app-typescript-ZTkjEbOkSw)
+- Solution URL: [Github Frontend Code](https://github.com/curiousmind04/Entertainment-Web-App-React-TS)
+- Solution URL: [Github Backend Code](https://github.com/curiousmind04/Entertainment-Web-App-Backend-TS)
+- Live Site URL: [Entertainment Web App](https://entertainment-web-app-reactts-c04.netlify.app/)
 
 ## My process
 

@@ -10,6 +10,7 @@ This is a solution to the [Entertainment web app challenge on Frontend Mentor](h
   - [Links](#links)
 - [My process](#my-process)
   - [Built with](#built-with)
+  - [Local Setup](#local-setup)
   - [Continued development](#continued-development)
 - [Author](#author)
 
@@ -57,6 +58,14 @@ Users should be able to:
 - MongoDB
 - JSON Web Tokens
 - Bcrypt
+
+### Local Setup
+
+-clone the frontend repo and the backend repo
+-run npm install in both 
+-start the frontend on localhost with npm run dev
+-provide environment variables for the backend clone (MongoDB URL and JWT secret key)
+-start the backend with npm start
 
 ### Continued development
 

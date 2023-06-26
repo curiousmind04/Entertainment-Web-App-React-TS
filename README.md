@@ -61,11 +61,11 @@ Users should be able to:
 
 ### Local Setup
 
--clone the frontend repo and the backend repo
--run npm install in both 
--start the frontend on localhost with npm run dev
--provide environment variables for the backend clone (MongoDB URL and JWT secret key)
--start the backend with npm start
+- clone the frontend repo and the backend repo
+- run npm install in both 
+- start the frontend on localhost with npm run dev
+- provide environment variables for the backend clone (MongoDB URL and JWT secret key)
+- start the backend with npm start
 
 ### Continued development
 
